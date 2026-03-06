@@ -47,18 +47,24 @@ public final class BlockReplaceGuiApp extends Application {
     primaryStage.setHeight(750);
     primaryStage.setResizable(false);
 
-    String[] iconNames = {
-      "block-replace.png",
-      "favicon-16x16.png",
-      "favicon-32x32.png",
-      "favicon-48x48.png",
-      "favicon-64x64.png",
-      "favicon-96x96.png"
-    };
-    for (String name : iconNames) {
-      var in = getClass().getResourceAsStream("/icons/" + name);
-      if (in != null) {
-        primaryStage.getIcons().add(new Image(in));
+    // Prefer bundled ICO (used by jpackage) so window/taskbar icon matches .exe.
+    var icoStream = getClass().getResourceAsStream("/icons/block-replace.ico");
+    if (icoStream != null) {
+      primaryStage.getIcons().add(new Image(icoStream));
+    } else {
+      String[] iconNames = {
+        "block-replace.png",
+        "favicon-16x16.png",
+        "favicon-32x32.png",
+        "favicon-48x48.png",
+        "favicon-64x64.png",
+        "favicon-96x96.png"
+      };
+      for (String name : iconNames) {
+        var in = getClass().getResourceAsStream("/icons/" + name);
+        if (in != null) {
+          primaryStage.getIcons().add(new Image(in));
+        }
       }
     }
 
