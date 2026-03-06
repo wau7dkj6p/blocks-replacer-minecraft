@@ -49,7 +49,7 @@ public final class BlockReplaceGuiApp extends Application {
     primaryStage.setHeight(750);
     primaryStage.setResizable(false);
 
-    applyMainWindowIcons(primaryStage);
+    applyWindowIcons(primaryStage);
 
     SplitPane split = new SplitPane();
     split.setOrientation(Orientation.VERTICAL);
@@ -65,30 +65,16 @@ public final class BlockReplaceGuiApp extends Application {
     primaryStage.show();
   }
 
-  static void applyMainWindowIcons(Stage stage) {
+  static void applyWindowIcons(Stage stage) {
     List<String> candidates = new ArrayList<>();
-    // Для главного окна используем только ICO, чтобы панель задач брала именно его.
-    candidates.add("/icons/block-replace.ico");
-
-    for (String path : candidates) {
-      var stream = BlockReplaceGuiApp.class.getResourceAsStream(path);
-      if (stream == null) {
-        continue;
-      }
-      Image img = new Image(stream);
-      if (!img.isError() && img.getWidth() > 0 && img.getHeight() > 0) {
-        stage.getIcons().add(img);
-      }
-    }
-  }
-
-  static void applyDialogIcons(Stage stage) {
-    List<String> candidates = new ArrayList<>();
+    // Prefer PNG resources when they are present on the classpath.
     candidates.add("/icons/favicon-16x16.png");
     candidates.add("/icons/favicon-32x32.png");
     candidates.add("/icons/favicon-48x48.png");
     candidates.add("/icons/favicon-64x64.png");
     candidates.add("/icons/favicon-96x96.png");
+    // Fallback to ICO so that existing resources continue to work if JavaFX supports it.
+    candidates.add("/icons/block-replace.ico");
 
     for (String path : candidates) {
       var stream = BlockReplaceGuiApp.class.getResourceAsStream(path);
