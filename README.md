@@ -1,10 +1,7 @@
 <div align="center">
-  <h1>block-replace</h1>
-  <p><strong>Массовая замена блоков в мирах Minecraft Java Edition</strong></p>
+  <h1><strong>Массовая замена блоков в мирах<br>Minecraft Java Edition</strong></h1>
   <p>Anvil (.mca) • McRegion (.mcr) • GUI + CLI в одном JAR</p>
-  <br>
   <img src="screenshots/Главное меню.png" alt="block-replace GUI" width="800">
-  <br>
   <p>
     <a href="#-возможности">Возможности</a> •
     <a href="#-быстрый-старт">Быстрый старт</a> •
@@ -12,9 +9,9 @@
     <a href="#-скачать">Скачать</a>
   </p>
   <p>
-    <a href="README/README-RU.md">Русский</a> <img src="https://img.shields.io/badge/Java-21-blue.svg">
+    <a href="README/README-RU.md">Русский</a> • <img src="https://img.shields.io/badge/Java-21-blue.svg"> 
     <img src="https://img.shields.io/badge/license-Unlicense-green.svg">
-    <img src="https://img.shields.io/badge/Minecraft-1.21.1-blueviolet.svg"><a href="README/README-ENG.md">English</a>
+    <img src="https://img.shields.io/badge/Minecraft-1.21.1-blueviolet.svg"> • <a href="README/README-ENG.md">English</a>
   </p>
   <p>
     
@@ -24,12 +21,11 @@
 
 ---
 
-## 📸 Интерфейс
+<h2 align="center">📸 Редактор задач</h2>
 
 <div align="center">
-  <img src="screenshots/Добавить задачу.png" alt="Добавить задачу" width="800">
+  <img src="screenshots/Добавить задачу.png" alt="Добавить задачу" width="600">
   <br>
-  <em>Редактор задач</em>
 </div>
 
 ---
@@ -149,6 +145,4 @@ cd block-replace
   <br>
   <sub>Вопросы, баги, идеи? → <a href="ссылка_на_issues">Issues</a></sub>
 </div>
-```
 
----
