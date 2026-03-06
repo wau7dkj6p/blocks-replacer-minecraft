@@ -7,6 +7,7 @@ dependencies {
 
   implementation("at.yawk.lz4:lz4-java:1.8.1")
 
-  testImplementation("org.junit.jupiter:junit-jupiter:5.14.2")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.14.2")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.14.2")
 }
 

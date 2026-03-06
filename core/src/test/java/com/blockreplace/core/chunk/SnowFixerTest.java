@@ -8,6 +8,7 @@ import com.blockreplace.core.nbt.NbtCompound;
 import com.blockreplace.core.nbt.NbtList;
 import com.blockreplace.core.nbt.NbtLongArray;
 import com.blockreplace.core.nbt.NbtString;
+import com.blockreplace.core.nbt.NbtType;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ public class SnowFixerTest {
     NbtCompound blockStates = new NbtCompound();
     section.put("block_states", blockStates);
 
-    NbtList palette = new NbtList();
+    NbtList palette = NbtList.of(NbtType.COMPOUND);
     NbtCompound grassEntry = new NbtCompound();
     grassEntry.put("Name", new NbtString("minecraft:grass_block"));
     NbtCompound props = new NbtCompound();
@@ -50,7 +51,7 @@ public class SnowFixerTest {
     NbtCompound blockStates = new NbtCompound();
     section.put("block_states", blockStates);
 
-    NbtList palette = new NbtList();
+    NbtList palette = NbtList.of(NbtType.COMPOUND);
     NbtCompound grassEntry = new NbtCompound();
     grassEntry.put("Name", new NbtString("minecraft:grass_block"));
     palette.add(grassEntry);
