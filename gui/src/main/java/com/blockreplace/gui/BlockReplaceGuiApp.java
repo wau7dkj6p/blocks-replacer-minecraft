@@ -67,14 +67,8 @@ public final class BlockReplaceGuiApp extends Application {
 
   static void applyMainWindowIcons(Stage stage) {
     List<String> candidates = new ArrayList<>();
-    // Для главного окна: сначала ICO, чтобы его использовала панель задач,
-    // затем PNG‑иконки для качественного отображения в разных размерах.
+    // Для главного окна используем только ICO, чтобы панель задач брала именно его.
     candidates.add("/icons/block-replace.ico");
-    candidates.add("/icons/favicon-16x16.png");
-    candidates.add("/icons/favicon-32x32.png");
-    candidates.add("/icons/favicon-48x48.png");
-    candidates.add("/icons/favicon-64x64.png");
-    candidates.add("/icons/favicon-96x96.png");
 
     for (String path : candidates) {
       var stream = BlockReplaceGuiApp.class.getResourceAsStream(path);
