@@ -23,8 +23,8 @@
 ## 📸 Интерфейс
 
 <div align="center">
-  <img src="screenshots/gui-tasks.png" alt="Редактор задач" width="400">
-  <img src="screenshots/cli-help.png" alt="CLI справка" width="400">
+  <img src="screenshots/Главное меню.png" alt="Главное меню" width="400">
+  <img src="screenshots/Добавить задачу.png" alt="Добавить задачу" width="400">
   <br>
 </div>
 
