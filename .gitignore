@@ -1,0 +1,36 @@
+# Gradle
+.gradle/
+build/
+*/build/
+app/build/
+cli/build/
+core/build/
+gui/build/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Native
+*.exe
+*.dll
+*.so
+*.dylib
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Package files
+gradle/wrapper/gradle-wrapper.jar
