@@ -75,8 +75,8 @@ java -jar block-replace-1.0.0-all.jar \
 
 | | |
 |---|---|
-| <img src="https://flagcdn.com/ru.svg" width="20"> [**Русская версия**](README-RU.md) | Полное описание на русском языке |
-| <img src="https://flagcdn.com/gb.svg" width="20"> [**English version**](README-ENG.md) | Full documentation in English |
+| <img src="https://flagcdn.com/ru.svg" width="20"> [**Русская версия**](README/README-RU.md) | Полное описание на русском языке |
+| <img src="https://flagcdn.com/gb.svg" width="20"> [**English version**](README/README-ENG.md) | Full documentation in English |
 
 В документации:
 - Установка и сборка
@@ -93,10 +93,10 @@ java -jar block-replace-1.0.0-all.jar \
 
 | Версия | Ссылка | Требования |
 |--------|--------|------------|
-| Fat JAR | [block-replace-1.0.0-all.jar](ссылка_на_jar) | Java 21 |
-| Windows | [block-replace-windows-x64.zip](ссылка_на_zip) | Windows 10/11 (Java внутри) |
+| Fat JAR | [block-replace-1.0.0-all.jar](https://github.com/wau7dkj6p/blocks-replacer-minecraft/releases/download/v1.0.0/block-replace-1.0.0-all.jar) | Java 21 |
+| Windows | [block-replace-windows-x64.zip](https://github.com/wau7dkj6p/blocks-replacer-minecraft/releases/download/v1.0.0/block-replace-windows-x64.zip) | Windows 10/11 (Java внутри) |
 
-> 📝 **Примечание:** Все релизы доступны на [странице релизов](ссылка_на_releases).
+> 📝 **Примечание:** Все релизы доступны на [странице релизов](https://github.com/wau7dkj6p/blocks-replacer-minecraft/releases).
 
 ---
 
@@ -143,6 +143,6 @@ cd block-replace
 <div align="center">
   <sub>Сделано с ❤️ для сообщества Minecraft</sub>
   <br>
-  <sub>Вопросы, баги, идеи? → <a href="ссылка_на_issues">Issues</a></sub>
+  <sub>Вопросы, баги, идеи? → <a href="https://github.com/wau7dkj6p/blocks-replacer-minecraft/issues">Issues</a></sub>
 </div>
 
