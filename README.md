@@ -104,7 +104,7 @@ java -jar block-replace-1.0.0-all.jar \
 
 ```bash
 # Клонируем
-git clone https://github.com/твой-username/block-replace.git
+git clone https://github.com/wau7dkj6p/blocks-replacer-minecraft.git
 cd block-replace
 
 # Собираем JAR
