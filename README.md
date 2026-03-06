@@ -12,13 +12,13 @@
     <a href="#-скачать">Скачать</a>
   </p>
   <p>
-    <img src="https://img.shields.io/badge/Java-21-blue.svg">
+    <a href="README/README-RU.md">Русский</a> <img src="https://img.shields.io/badge/Java-21-blue.svg">
     <img src="https://img.shields.io/badge/license-Unlicense-green.svg">
-    <img src="https://img.shields.io/badge/Minecraft-1.21.1-blueviolet.svg">
+    <img src="https://img.shields.io/badge/Minecraft-1.21.1-blueviolet.svg"><a href="README/README-ENG.md">English</a>
   </p>
   <p>
-    <a href="README/README-RU.md">Русский</a> 
-    <a href="README/README-ENG.md">English</a>
+    
+    
   </p>
 </div>
 
