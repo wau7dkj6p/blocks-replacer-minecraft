@@ -17,8 +17,8 @@
     <img src="https://img.shields.io/badge/Minecraft-1.21.1-blueviolet.svg">
   </p>
   <p>
-    <a href="README-RU.md">🇷🇺 Русский</a> •
-    <a href="README-ENG.md">🇬🇧 English</a>
+    <a href="README/README-RU.md">Русский</a> 
+    <a href="README/README-ENG.md">English</a>
   </p>
 </div>
 
@@ -29,7 +29,7 @@
 <div align="center">
   <img src="screenshots/Добавить задачу.png" alt="Добавить задачу" width="800">
   <br>
-  <em>Главное окно и редактор задач</em>
+  <em>Редактор задач</em>
 </div>
 
 ---
