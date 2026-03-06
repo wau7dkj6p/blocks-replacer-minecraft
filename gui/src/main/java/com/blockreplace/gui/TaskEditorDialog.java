@@ -14,7 +14,6 @@ import java.util.UUID;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -49,16 +48,7 @@ final class TaskEditorDialog {
     stage.initModality(Modality.WINDOW_MODAL);
     stage.setTitle(initial == null ? "Добавить задачу" : "Редактировать задачу");
 
-    // Reuse the same window/taskbar icon as main app.
-    var icoStream = BlockReplaceGuiApp.class.getResourceAsStream("/icons/block-replace.ico");
-    if (icoStream != null) {
-      stage.getIcons().add(new Image(icoStream));
-    } else {
-      var pngStream = BlockReplaceGuiApp.class.getResourceAsStream("/icons/block-replace.png");
-      if (pngStream != null) {
-        stage.getIcons().add(new Image(pngStream));
-      }
-    }
+    BlockReplaceGuiApp.applyWindowIcons(stage);
 
     ToggleGroup modeGroup = new ToggleGroup();
     RadioButton vanillaBtn = new RadioButton("Ванила");

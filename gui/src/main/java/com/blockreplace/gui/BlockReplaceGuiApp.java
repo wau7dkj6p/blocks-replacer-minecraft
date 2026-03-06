@@ -29,6 +29,8 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class BlockReplaceGuiApp extends Application {
   public static void launchGui(String[] args) {
@@ -47,26 +49,7 @@ public final class BlockReplaceGuiApp extends Application {
     primaryStage.setHeight(750);
     primaryStage.setResizable(false);
 
-    // Prefer bundled ICO (used by jpackage) so window/taskbar icon matches .exe.
-    var icoStream = getClass().getResourceAsStream("/icons/block-replace.ico");
-    if (icoStream != null) {
-      primaryStage.getIcons().add(new Image(icoStream));
-    } else {
-      String[] iconNames = {
-        "block-replace.png",
-        "favicon-16x16.png",
-        "favicon-32x32.png",
-        "favicon-48x48.png",
-        "favicon-64x64.png",
-        "favicon-96x96.png"
-      };
-      for (String name : iconNames) {
-        var in = getClass().getResourceAsStream("/icons/" + name);
-        if (in != null) {
-          primaryStage.getIcons().add(new Image(in));
-        }
-      }
-    }
+    applyWindowIcons(primaryStage);
 
     SplitPane split = new SplitPane();
     split.setOrientation(Orientation.VERTICAL);
@@ -80,6 +63,29 @@ public final class BlockReplaceGuiApp extends Application {
     Scene scene = new Scene(split);
     primaryStage.setScene(scene);
     primaryStage.show();
+  }
+
+  static void applyWindowIcons(Stage stage) {
+    List<String> candidates = new ArrayList<>();
+    // Prefer PNG resources when they are present on the classpath.
+    candidates.add("/icons/favicon-16x16.png");
+    candidates.add("/icons/favicon-32x32.png");
+    candidates.add("/icons/favicon-48x48.png");
+    candidates.add("/icons/favicon-64x64.png");
+    candidates.add("/icons/favicon-96x96.png");
+    // Fallback to ICO so that existing resources continue to work if JavaFX supports it.
+    candidates.add("/icons/block-replace.ico");
+
+    for (String path : candidates) {
+      var stream = BlockReplaceGuiApp.class.getResourceAsStream(path);
+      if (stream == null) {
+        continue;
+      }
+      Image img = new Image(stream);
+      if (!img.isError() && img.getWidth() > 0 && img.getHeight() > 0) {
+        stage.getIcons().add(img);
+      }
+    }
   }
 
   @Override
