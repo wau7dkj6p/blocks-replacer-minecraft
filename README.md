@@ -27,7 +27,6 @@
 ## 📸 Интерфейс
 
 <div align="center">
-  <img src="" alt="Главное меню" width="400">
   <img src="screenshots/Добавить задачу.png" alt="Добавить задачу" width="400">
   <br>
   <em>Главное окно и редактор задач</em>
