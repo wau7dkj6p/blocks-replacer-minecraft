@@ -3,7 +3,7 @@
   <p><strong>Массовая замена блоков в мирах Minecraft Java Edition</strong></p>
   <p>Anvil (.mca) • McRegion (.mcr) • GUI + CLI в одном JAR</p>
   <br>
-  <img src="screenshots/gui-main.png" alt="block-replace GUI" width="800">
+  <img src="screenshots/Главное меню.png" alt="block-replace GUI" width="800">
   <br>
   <p>
     <a href="#-возможности">Возможности</a> •
@@ -27,7 +27,7 @@
 ## 📸 Интерфейс
 
 <div align="center">
-  <img src="screenshots/Главное меню.png" alt="Главное меню" width="400">
+  <img src="" alt="Главное меню" width="400">
   <img src="screenshots/Добавить задачу.png" alt="Добавить задачу" width="400">
   <br>
   <em>Главное окно и редактор задач</em>
