@@ -49,7 +49,7 @@ public final class BlockReplaceGuiApp extends Application {
     primaryStage.setHeight(750);
     primaryStage.setResizable(false);
 
-    applyWindowIcons(primaryStage);
+    applyMainWindowIcons(primaryStage);
 
     SplitPane split = new SplitPane();
     split.setOrientation(Orientation.VERTICAL);
@@ -65,15 +65,36 @@ public final class BlockReplaceGuiApp extends Application {
     primaryStage.show();
   }
 
-  static void applyWindowIcons(Stage stage) {
+  static void applyMainWindowIcons(Stage stage) {
     List<String> candidates = new ArrayList<>();
-    // Панель задач и заголовок окна должны использовать ICO, если платформа его поддерживает.
+    // Для главного окна: сначала ICO, чтобы его использовала панель задач,
+    // затем PNG‑иконки для качественного отображения в разных размерах.
     candidates.add("/icons/block-replace.ico");
-    // PNG-иконки остаются как запасные варианты для сред, где ICO может не читаться.
-    candidates.add("/icons/favicon-96x96.png");
-    candidates.add("/icons/favicon-48x48.png");
-    candidates.add("/icons/favicon-32x32.png");
     candidates.add("/icons/favicon-16x16.png");
+    candidates.add("/icons/favicon-32x32.png");
+    candidates.add("/icons/favicon-48x48.png");
+    candidates.add("/icons/favicon-64x64.png");
+    candidates.add("/icons/favicon-96x96.png");
+
+    for (String path : candidates) {
+      var stream = BlockReplaceGuiApp.class.getResourceAsStream(path);
+      if (stream == null) {
+        continue;
+      }
+      Image img = new Image(stream);
+      if (!img.isError() && img.getWidth() > 0 && img.getHeight() > 0) {
+        stage.getIcons().add(img);
+      }
+    }
+  }
+
+  static void applyDialogIcons(Stage stage) {
+    List<String> candidates = new ArrayList<>();
+    candidates.add("/icons/favicon-16x16.png");
+    candidates.add("/icons/favicon-32x32.png");
+    candidates.add("/icons/favicon-48x48.png");
+    candidates.add("/icons/favicon-64x64.png");
+    candidates.add("/icons/favicon-96x96.png");
 
     for (String path : candidates) {
       var stream = BlockReplaceGuiApp.class.getResourceAsStream(path);
