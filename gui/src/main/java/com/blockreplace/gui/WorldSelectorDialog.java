@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -31,6 +32,17 @@ final class WorldSelectorDialog {
     stage.initOwner(owner);
     stage.initModality(Modality.WINDOW_MODAL);
     stage.setTitle("Выбор мира (папка с level.dat)");
+
+    // Reuse the same window/taskbar icon as main app.
+    var icoStream = BlockReplaceGuiApp.class.getResourceAsStream("/icons/block-replace.ico");
+    if (icoStream != null) {
+      stage.getIcons().add(new Image(icoStream));
+    } else {
+      var pngStream = BlockReplaceGuiApp.class.getResourceAsStream("/icons/block-replace.png");
+      if (pngStream != null) {
+        stage.getIcons().add(new Image(pngStream));
+      }
+    }
 
     TextField currentPathField = new TextField();
     currentPathField.setEditable(false);
