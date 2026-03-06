@@ -67,14 +67,13 @@ public final class BlockReplaceGuiApp extends Application {
 
   static void applyWindowIcons(Stage stage) {
     List<String> candidates = new ArrayList<>();
-    // Prefer PNG resources when they are present on the classpath.
-    candidates.add("/icons/favicon-16x16.png");
-    candidates.add("/icons/favicon-32x32.png");
-    candidates.add("/icons/favicon-48x48.png");
-    candidates.add("/icons/favicon-64x64.png");
-    candidates.add("/icons/favicon-96x96.png");
-    // Fallback to ICO so that existing resources continue to work if JavaFX supports it.
+    // Панель задач и заголовок окна должны использовать ICO, если платформа его поддерживает.
     candidates.add("/icons/block-replace.ico");
+    // PNG-иконки остаются как запасные варианты для сред, где ICO может не читаться.
+    candidates.add("/icons/favicon-96x96.png");
+    candidates.add("/icons/favicon-48x48.png");
+    candidates.add("/icons/favicon-32x32.png");
+    candidates.add("/icons/favicon-16x16.png");
 
     for (String path : candidates) {
       var stream = BlockReplaceGuiApp.class.getResourceAsStream(path);
