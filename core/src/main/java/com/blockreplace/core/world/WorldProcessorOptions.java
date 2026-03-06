@@ -11,6 +11,5 @@ public record WorldProcessorOptions(
     boolean allowUnknownBlocks,
     boolean saveState,
     boolean resumeFromState,
-    boolean fixSnowyGround,
-    boolean fixLight) {}
+    boolean fixSnowyGround) {}
 

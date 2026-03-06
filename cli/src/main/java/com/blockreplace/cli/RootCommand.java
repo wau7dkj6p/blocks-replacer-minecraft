@@ -92,10 +92,7 @@ public final class RootCommand implements Runnable {
       description = "Disable automatic fixing of snowy=true grass/podzol/mycelium under removed snow.")
   private boolean noFixSnowyGround;
 
-  @Option(
-      names = {"--fix-light"},
-      description = "Recalculate block/sky light after replacement (or run light-only when no tasks).")
-  private boolean fixLight;
+  // Removed legacy --fix-light option and light-only mode.
 
   @Override
   public void run() {
@@ -126,9 +123,7 @@ public final class RootCommand implements Runnable {
               + ", resume="
               + resume
               + ", fixSnowyGround="
-              + !noFixSnowyGround
-              + ", fixLight="
-              + fixLight);
+              + !noFixSnowyGround);
       if (tasks.isEmpty()) {
         System.out.println("Tasks           : <none>");
       } else {
@@ -152,8 +147,7 @@ public final class RootCommand implements Runnable {
               allowUnknownBlocks,
               saveState,
               resume,
-              !noFixSnowyGround,
-              fixLight);
+              !noFixSnowyGround);
       WorldProcessor processor =
           new WorldProcessor(
               opts, tasks, db, new CliProgressListener(shared != null && shared.ansi));
@@ -217,11 +211,9 @@ public final class RootCommand implements Runnable {
       BlockStateSpec fromSpec = BlockStateSpec.parse(from);
       BlockStateSpec toSpec = BlockStateSpec.parse(to);
       list.add(new ReplaceTask(null, "cli-task: " + fromSpec + " -> " + toSpec, fromSpec, toSpec, false, true));
-    } else if (fixLight) {
-      // Light-only run: no tasks, just recalculate lighting.
     } else {
       throw new IllegalArgumentException(
-          "No tasks specified. Use either --from and --to for a single task, or one/more --task FROM->TO entries (or --fix-light for light-only run).");
+          "No tasks specified. Use either --from and --to for a single task, or one/more --task FROM->TO entries.");
     }
     return list;
   }

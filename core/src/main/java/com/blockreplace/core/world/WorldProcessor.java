@@ -4,7 +4,6 @@ import com.blockreplace.core.blockdb.BlockDatabase;
 import com.blockreplace.core.chunk.BlockEntityFixer;
 import com.blockreplace.core.chunk.ChunkReplaceResult;
 import com.blockreplace.core.chunk.ChunkReplacer;
-import com.blockreplace.core.chunk.LightFixer;
 import com.blockreplace.core.nbt.NbtCompound;
 import com.blockreplace.core.region.RegionBackend;
 import com.blockreplace.core.region.RegionChunkData;
@@ -57,10 +56,8 @@ public final class WorldProcessor {
   public void run() throws IOException {
     cancelled = false;
     completedNormally = false;
-    boolean lightOnly = tasks.isEmpty() && options.fixLight();
-
-    if (!lightOnly) {
-      // Validate tasks against block database.
+    // Validate tasks against block database when present.
+    if (!tasks.isEmpty()) {
       for (ReplaceTask t : tasks) {
         if (!t.enabled()) continue;
         if (options.allowUnknownBlocks()) {
@@ -89,7 +86,7 @@ public final class WorldProcessor {
     Path stateFile = options.worldRoot().resolve(".block-replace-state.json");
     WorldProcessState state = null;
 
-    if (!lightOnly && options.resumeFromState()) {
+    if (!tasks.isEmpty() && options.resumeFromState()) {
       try {
         WorldProcessState loaded = WorldProcessState.load(stateFile);
         if (loaded != null
@@ -102,7 +99,7 @@ public final class WorldProcessor {
       }
     }
 
-    if (!lightOnly && state == null && options.saveState()) {
+    if (!tasks.isEmpty() && state == null && options.saveState()) {
       state =
           WorldProcessState.create(
               options.worldRoot(), tasks, options.allowUnknownBlocks(), options.fixSnowyGround());
@@ -215,8 +212,6 @@ public final class WorldProcessor {
       }
     }
 
-    boolean lightOnly = tasks.isEmpty() && options.fixLight();
-
     listener.onRegionStart(dim, regionFile, presentChunks);
     listener.onInfo(
         "Processing region "
@@ -227,7 +222,6 @@ public final class WorldProcessor {
             + presentChunks
             + ", mode="
             + (options.dryRun() ? "dry-run" : "real")
-            + (lightOnly ? ", light-only" : "")
             + ")");
     if (presentChunks == 0) {
       listener.onRegionDone(dim, regionFile, false, 0, 0L, 0, 0);
@@ -245,13 +239,6 @@ public final class WorldProcessor {
           for (int localX = 0; localX < RegionFile.CHUNKS_PER_REGION_SIDE; localX++) {
             if (!backend.hasChunk(localX, localZ)) continue;
             visitedChunks++;
-            if (lightOnly) {
-              regionChunksModified++;
-              int chunkX = coords.chunkX(localX);
-              int chunkZ = coords.chunkZ(localZ);
-              listener.onChunkDone(dim, regionFile, chunkX, chunkZ, 0L, 0, 0);
-              continue;
-            }
             RegionChunkData data = backend.readChunk(localX, localZ).orElse(null);
             if (data == null) continue;
             NbtCompound root = ChunkCodecs.decode(data, format);
@@ -329,15 +316,6 @@ public final class WorldProcessor {
         (localX, localZ, original) -> {
           regionChunksVisited[0]++;
           NbtCompound root = ChunkCodecs.decode(original, format);
-
-          if (lightOnly) {
-            LightFixer.fixChunk(root, blockDb, dim);
-            regionChunksModified[0]++;
-            RegionCoords c = coords;
-            listener.onChunkDone(dim, regionFile, c.chunkX(localX), c.chunkZ(localZ), 0L, 0, 0);
-            return ChunkCodecs.encode(root, original, format);
-          }
-
           ChunkReplaceResult r = ChunkReplacer.applyTasks(root, tasks, options.fixSnowyGround());
           if (!r.modified()) {
             return original;
@@ -350,10 +328,6 @@ public final class WorldProcessor {
           int beRemoved =
               BlockEntityFixer.removeBlockEntitiesForNameChangedBlocks(
                   root, chunkX, chunkZ, r.nameChangedPaletteIndicesBySection());
-
-          if (options.fixLight()) {
-            LightFixer.fixChunk(root, blockDb, dim);
-          }
 
           RegionChunkData encoded = ChunkCodecs.encode(root, original, format);
 

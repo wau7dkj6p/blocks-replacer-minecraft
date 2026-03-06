@@ -109,8 +109,6 @@ public final class BlockReplaceGuiApp extends Application {
     CheckBox netherBox = new CheckBox("Nether");
     CheckBox endBox = new CheckBox("End");
     HBox dimsRow = new HBox(8, new Label("Измерения:"), overworldBox, netherBox, endBox);
-    CheckBox fixShadowsBox = new CheckBox("Фикс теней");
-    HBox dimsAndFixRow = new HBox(8, dimsRow, fixShadowsBox);
 
     // Tasks list and buttons
     ListView<ReplaceTask> taskList = new ListView<>();
@@ -137,12 +135,11 @@ public final class BlockReplaceGuiApp extends Application {
     Button addBtn = new Button("Добавить задачу");
     Button deleteBtn = new Button("Удалить выбранное");
     Button editBtn = new Button("Редактировать выбранное");
-    Button fixShadowsBtn = new Button("Исправить тени");
     deleteBtn.setDisable(true);
     editBtn.setDisable(true);
-    taskButtons.getChildren().addAll(exportBtn, importBtn, addBtn, deleteBtn, editBtn, fixShadowsBtn);
+    taskButtons.getChildren().addAll(exportBtn, importBtn, addBtn, deleteBtn, editBtn);
 
-    controls.getChildren().addAll(worldRow, worldInfo, dimsAndFixRow, taskButtons, taskList);
+    controls.getChildren().addAll(worldRow, worldInfo, dimsRow, taskButtons, taskList);
     VBox.setVgrow(taskList, Priority.ALWAYS);
 
     root.setCenter(controls);
@@ -269,52 +266,7 @@ public final class BlockReplaceGuiApp extends Application {
     // Attach tasks list, world field and dimension checkboxes into root user data for bottom pane
     // usage.
     root.setUserData(
-        new TopContext(worldField, taskList, overworldBox, netherBox, endBox, fixShadowsBox));
-
-    // Fix shadows button: run light-only processing (no tasks).
-    fixShadowsBtn.setOnAction(
-        e -> {
-          if (running.get()) return;
-          if (fixShadowsBtn.getScene() == null || fixShadowsBtn.getScene().getRoot() == null) return;
-          SplitPane split;
-          try {
-            split = (SplitPane) fixShadowsBtn.getScene().getRoot();
-          } catch (ClassCastException ex) {
-            return;
-          }
-          BorderPane top = (BorderPane) split.getItems().get(0);
-          TopContext ctx = (TopContext) top.getUserData();
-          if (ctx == null) return;
-          Object bottomNode = split.getItems().size() > 1 ? split.getItems().get(1) : null;
-          if (!(bottomNode instanceof VBox bottomBox)) return;
-          BottomContext bctx = (BottomContext) bottomBox.getUserData();
-          if (bctx == null) return;
-          String levelPath = ctx.levelDatField.getText();
-          if (levelPath == null || levelPath.isBlank()) {
-            bctx.console().getItems().add("[WARN] Выберите level.dat");
-            return;
-          }
-          EnumSet<WorldDimension> dimensions = EnumSet.noneOf(WorldDimension.class);
-          if (ctx.overworldBox.isSelected()) dimensions.add(WorldDimension.OVERWORLD);
-          if (ctx.netherBox.isSelected()) dimensions.add(WorldDimension.NETHER);
-          if (ctx.endBox.isSelected()) dimensions.add(WorldDimension.END);
-          if (dimensions.isEmpty()) {
-            bctx.console().getItems().add("[WARN] Выберите хотя бы одно измерение");
-            return;
-          }
-          Path worldRoot = Path.of(levelPath).toAbsolutePath().getParent();
-          startProcessing(
-              worldRoot,
-              dimensions,
-              List.of(),
-              true,
-              false,
-              worldRoot.resolve(".block-replace-state.json"),
-              bctx.console(),
-              bctx.filesLabel(),
-              bctx.progress(),
-              bctx.runBtn());
-        });
+        new TopContext(worldField, taskList, overworldBox, netherBox, endBox));
 
     return root;
   }
@@ -375,9 +327,8 @@ public final class BlockReplaceGuiApp extends Application {
             return;
           }
           List<ReplaceTask> tasks = List.copyOf(ctx.taskList.getItems());
-          boolean lightOnly = tasks.isEmpty() && ctx.fixShadowsBox.isSelected();
-          if (tasks.isEmpty() && !ctx.fixShadowsBox.isSelected()) {
-            console.getItems().add("[WARN] Добавьте хотя бы одну задачу или включите «Фикс теней»");
+          if (tasks.isEmpty()) {
+            console.getItems().add("[WARN] Добавьте хотя бы одну задачу");
             return;
           }
 
@@ -400,7 +351,7 @@ public final class BlockReplaceGuiApp extends Application {
           Path stateFile = worldRoot.resolve(".block-replace-state.json");
 
           boolean resumeStateFlag = false;
-          if (!lightOnly && Files.isRegularFile(stateFile)) {
+          if (Files.isRegularFile(stateFile)) {
             Alert alert =
                 new Alert(
                     Alert.AlertType.CONFIRMATION,
@@ -430,13 +381,10 @@ public final class BlockReplaceGuiApp extends Application {
             }
           }
 
-          boolean fixLight = lightOnly || ctx.fixShadowsBox.isSelected();
-          List<ReplaceTask> tasksToUse = lightOnly ? List.of() : tasks;
           startProcessing(
               worldRoot,
               dimensions,
-              tasksToUse,
-              fixLight,
+              tasks,
               resumeStateFlag,
               stateFile,
               console,
@@ -453,7 +401,6 @@ public final class BlockReplaceGuiApp extends Application {
       Path worldRoot,
       EnumSet<WorldDimension> dimensions,
       List<ReplaceTask> tasks,
-      boolean fixLight,
       boolean resumeFromState,
       Path stateFile,
       ListView<String> console,
@@ -481,8 +428,7 @@ public final class BlockReplaceGuiApp extends Application {
                     allowUnknownBlocks,
                     saveStateFlag,
                     resumeFromState,
-                    true,
-                    fixLight);
+                    true);
             WorldProcessor processor =
                 new WorldProcessor(
                     opts,
@@ -538,8 +484,7 @@ public final class BlockReplaceGuiApp extends Application {
       ListView<ReplaceTask> taskList,
       CheckBox overworldBox,
       CheckBox netherBox,
-      CheckBox endBox,
-      CheckBox fixShadowsBox) {}
+      CheckBox endBox) {}
 
   private record BottomContext(
       ListView<String> console,
