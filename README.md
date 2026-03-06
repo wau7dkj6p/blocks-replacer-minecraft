@@ -26,7 +26,6 @@
   <img src="screenshots/gui-tasks.png" alt="Редактор задач" width="400">
   <img src="screenshots/cli-help.png" alt="CLI справка" width="400">
   <br>
-  <em>Слева: редактор задач в GUI • Справа: справка CLI</em>
 </div>
 
 ---
